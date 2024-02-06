@@ -40,7 +40,7 @@ export class Uploader {
       [md5Icon]
     )
     if (query) {
-      return query.url
+      return query.url as string
     }
     logger.log("Uploading icon", name)
     const path = `process_icons/${md5Icon}.png`
@@ -59,6 +59,6 @@ export class Uploader {
 
         db.run(`INSERT INTO uploads (name, url) VALUES (?, ?)`, [md5Icon, url])
       })
-    return url
+    return url as string
   }
 }

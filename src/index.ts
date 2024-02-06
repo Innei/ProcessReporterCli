@@ -16,15 +16,18 @@ async function main() {
 
   handler(ActiveWindow.getActiveWindow())
 
-  function handler(activeWin: WindowInfo | null) {
+  async function handler(activeWin: WindowInfo | null) {
     if (!activeWin) return
 
-    Uploader.shared.uploadIcon(activeWin.icon, activeWin.application)
+    const iconUrl = await Uploader.shared.uploadIcon(
+      activeWin.icon,
+      activeWin.application
+    )
 
     const transformedData = pushDataReplacor({
       process: activeWin.application,
       description: activeWin.title,
-      // iconBase64: activeWin.icon,
+      iconUrl,
     })
 
     if (!transformedData) return
