@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "declaration": true,
+    "removeComments": true,
+    "strictNullChecks": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2020",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "allowJs": true,
+    "baseUrl": ".",
+    "noImplicitAny": false,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "lib": [
+      "ES2021",
+      "es2020",
+    ],
+    "skipLibCheck": true,
+  },
+  "include": [
+    "src/**/*",
+    "*.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "tmp",
+  ]
+}
