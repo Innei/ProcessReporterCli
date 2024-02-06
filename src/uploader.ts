@@ -36,15 +36,15 @@ export class Uploader {
 
     const md5Icon = md5(iconBase64)
     const [query] = await db.all(
-      "SELECT * FROM uploads WHERE name = ? LIMIT 1",
-      [md5Icon]
+      "SELECT * FROM uploads WHERE name = ? OR md5 = ? LIMIT 1",
+      [name, md5Icon]
     )
     if (query) {
       return query.url as string
     }
     logger.log("Uploading icon", name)
-    const path = `process_icons/${md5Icon}.png`
-    const url = s3.customDomain + path
+    const path = `${md5Icon}.png`
+    const url = s3.customDomain + "/" + path
     uploadToS3(
       path,
       Buffer.from(iconBase64.split(",")[1], "base64"),
@@ -57,7 +57,11 @@ export class Uploader {
       .then(() => {
         logger.log("Icon uploaded", name, url)
 
-        db.run(`INSERT INTO uploads (name, url) VALUES (?, ?)`, [md5Icon, url])
+        db.run(`INSERT INTO uploads (md5, url, name) VALUES (?, ?, ?)`, [
+          md5Icon,
+          url,
+          name,
+        ])
       })
     return url as string
   }

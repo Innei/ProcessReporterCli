@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@vercel/ncc':
+    specifier: ^0.38.1
+    version: 0.38.1
+
 devDependencies:
   '@aws-sdk/client-s3':
     specifier: 3.504.0
@@ -18,8 +23,8 @@ devDependencies:
     specifier: ^16.4.1
     version: 16.4.1
   nestjs-pretty-logger:
-    specifier: ^0.2.0
-    version: 0.2.0(reflect-metadata@0.1.14)(rxjs@7.8.1)
+    specifier: ^0.2.1
+    version: 0.2.1(@nestjs/common@10.3.1)
   sqlite:
     specifier: 5.1.1
     version: 5.1.1
@@ -933,11 +938,9 @@ packages:
     engines: {node: '>=8'}
     requiresBuild: true
     dev: true
-    optional: true
 
   /@nestjs/common@10.3.1(reflect-metadata@0.1.14)(rxjs@7.8.1):
     resolution: {integrity: sha512-YuxeIlVemVQCuXMkNbBpNlmwZgp/Cu6dwCOjki63mhyYHEFX48GNNA4zZn5MFRjF4h7VSceABsScROuzsxs9LA==}
-    requiresBuild: true
     peerDependencies:
       class-transformer: '*'
       class-validator: '*'
@@ -955,7 +958,6 @@ packages:
       tslib: 2.6.2
       uid: 2.0.2
     dev: true
-    optional: true
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1592,6 +1594,11 @@ packages:
     dependencies:
       undici-types: 5.26.5
     dev: true
+
+  /@vercel/ncc@0.38.1:
+    resolution: {integrity: sha512-IBBb+iI2NLu4VQn3Vwldyi2QwaXt5+hTyh58ggAMoCGE6DJmPvwL3KPBWcJl1m9LYPChBLE980Jw+CS4Wokqxw==}
+    hasBin: true
+    dev: false
 
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -2322,7 +2329,6 @@ packages:
     engines: {node: '>=6'}
     requiresBuild: true
     dev: true
-    optional: true
 
   /jackspeak@2.3.6:
     resolution: {integrity: sha512-N3yCS/NegsOBokc8GAdM8UcmfsKiSS8cipheD/nivzr700H+nsMOxJjQnvwOcRYVuFkdH0wGUvW2WbXGmrZGbQ==}
@@ -2554,21 +2560,17 @@ packages:
     dev: true
     optional: true
 
-  /nestjs-pretty-logger@0.2.0(reflect-metadata@0.1.14)(rxjs@7.8.1):
-    resolution: {integrity: sha512-W5EVHpTIfDZR2zC5mMfVp3KuyWhusJzjJJDLgzapshgGL1rOB5WcP3wl5a5RIqp0DU18TZt1WDZG8Y8pvgdQuA==}
+  /nestjs-pretty-logger@0.2.1(@nestjs/common@10.3.1):
+    resolution: {integrity: sha512-ivQzoS571vb9dLGyJllPAQOfBlE7Zw3XWzQCJCAC9Iq+mMsvu35QQ8OIQUZwwxQdS1Z2FtZx8NwYQj5Ka1/9QA==}
+    peerDependencies:
+      '@nestjs/common': '>=10'
     dependencies:
+      '@nestjs/common': 10.3.1(reflect-metadata@0.1.14)(rxjs@7.8.1)
       cron: 3.1.6
       defu: 6.1.4
       picocolors: 1.0.0
       std-env: 3.7.0
       string-width: /@innei/string-width@7.0.0-fork.1
-    optionalDependencies:
-      '@nestjs/common': 10.3.1(reflect-metadata@0.1.14)(rxjs@7.8.1)
-    transitivePeerDependencies:
-      - class-transformer
-      - class-validator
-      - reflect-metadata
-      - rxjs
     dev: true
 
   /node-abi@3.54.0:
@@ -2810,7 +2812,6 @@ packages:
   /reflect-metadata@0.1.14:
     resolution: {integrity: sha512-ZhYeb6nRaXCfhnndflDK8qI6ZQ/YcWZCISRAWICW9XYqMUwjZM9Z0DveWX/ABN01oxSHwVxKQmxeYZSsm0jh5A==}
     dev: true
-    optional: true
 
   /resolve-from@5.0.0:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
@@ -2876,7 +2877,6 @@ packages:
     dependencies:
       tslib: 2.6.2
     dev: true
-    optional: true
 
   /safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
@@ -3222,7 +3222,6 @@ packages:
     dependencies:
       '@lukeed/csprng': 1.1.0
     dev: true
-    optional: true
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}

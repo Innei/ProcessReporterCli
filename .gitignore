@@ -47,3 +47,5 @@ dist
 .env
 data.db
 logs
+
+/lib

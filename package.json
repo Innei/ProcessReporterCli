@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsup"
+    "build": "tsc && ncc build lib/index.js -o dist"
   },
   "author": "Innei",
   "license": "MIT",
@@ -14,11 +14,11 @@
     "@paymoapp/active-window": "^2.0.6",
     "@types/node": "^20.11.16",
     "dotenv": "^16.4.1",
+    "nestjs-pretty-logger": "^0.2.1",
+    "sqlite": "5.1.1",
+    "sqlite3": "5.1.7",
     "tsup": "^8.0.1",
     "tsx": "^4.7.0",
-    "typescript": "^5.3.3",
-    "nestjs-pretty-logger": "^0.2.0",
-    "sqlite": "5.1.1",
-    "sqlite3": "5.1.7"
+    "typescript": "^5.3.3"
   }
 }

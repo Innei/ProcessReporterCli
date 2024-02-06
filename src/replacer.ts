@@ -17,7 +17,10 @@ export const pushDataReplacor = (data: PushData) => {
     return
   }
 
-  const rule = rules.find((rule) => rule.matchApplication === data.process)
+  const rule = rules.find(
+    (rule) =>
+      rule.matchApplication === data.process || rule.matchApplication === "*"
+  )
   if (!rule) return data
   const finalIconProps: PushDto["meta"] = rule.override?.iconUrl
     ? {

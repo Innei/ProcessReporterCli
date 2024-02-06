@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2020",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "allowJs": true,
     "baseUrl": ".",
     "noImplicitAny": false,

@@ -18,8 +18,9 @@ async function getDb() {
   async function initializeDb() {
     await db.exec(`CREATE TABLE IF NOT EXISTS uploads (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    url TEXT NOT NULL
+    md5 TEXT NOT NULL,
+    url TEXT NOT NULL,
+    name TEXT NOT NULL
   )`)
   }
 

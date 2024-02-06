@@ -19,16 +19,23 @@ export const rules: Rule[] = [
     replace: {
       application: (appName) => "Code",
       description: (des) =>
-        "写码 -> " + des?.split(" - ").slice(0, 2).join(" - "),
+        "写码:\n-> " + des?.split(" - ").slice(0, 2).join(" - "),
     },
     override: {},
   },
   {
     matchApplication: "Google Chrome",
     replace: {
-      // application: (appName) => "Chrome",
       description: (des) =>
-        "正在浏览 -> " + des?.split(" - ").slice(0, 2).join(" - "),
+        "正在浏览:\n->" + des?.split(" - ").slice(0, 2).join(" - "),
+    },
+  },
+  {
+    matchApplication: "*",
+    replace: {
+      description(des) {
+        return `\n${des}`
+      },
     },
   },
 ]
@@ -43,8 +50,8 @@ export const s3 = {
   accountId: "de7ecb0eaa0a328071255d557a6adb66",
   accessKeyId: process.env.S3_ACCESS_KEY as string,
   secretAccessKey: process.env.S3_SECRET_KEY as string,
-  bucket: "uploads",
-  customDomain: "https://object.innei.in",
+  bucket: "process-reporter",
+  customDomain: "https://process-reporter-cdn.innei.in",
   region: "auto",
   get endpoint() {
     return `https://${s3.accountId}.r2.cloudflarestorage.com`
