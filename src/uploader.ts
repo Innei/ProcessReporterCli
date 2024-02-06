@@ -43,7 +43,7 @@ export class Uploader {
       return query.url
     }
     logger.log("Uploading icon", name)
-    const path = `/process_icons/${md5Icon}.png`
+    const path = `process_icons/${md5Icon}.png`
     const url = s3.customDomain + path
     uploadToS3(
       path,
