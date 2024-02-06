@@ -40,7 +40,14 @@ pnpm run dev
 
 For production
 
-WIP
+
+```bash
+pnpm install
+pnpm run build
+cd dist
+## before your run it, you need to check your env file is in the dist directory
+node index.js
+```
 
 ## License
 
