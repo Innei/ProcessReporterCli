@@ -19,26 +19,46 @@ export const rules: Rule[] = [
     replace: {
       application: (appName) => "Code",
       description: (des) =>
-        "写码:\n-> " + des?.split(" - ").slice(0, 2).join(" - "),
+        des ? "写码:\n-> " + des.split(" - ").slice(0, 2).join(" - ") : "",
     },
-    override: {},
+  },
+  {
+    matchApplication: "QQ音乐 听我想听",
+    replace: {
+      application: (appName) => "QQ音乐",
+      description: (des) => (des ? "正在听:\n-> " + des?.trim() : des),
+    },
+    override: {
+      iconUrl: "",
+    },
   },
   {
     matchApplication: "Google Chrome",
     replace: {
       description: (des) =>
-        "正在浏览:\n->" + des?.split(" - ").slice(0, 2).join(" - "),
+        des ? "正在浏览:\n->" + des.split(" - ").slice(0, 2).join(" - ") : "",
     },
   },
+
   {
-    matchApplication: "*",
+    matchApplication: "League of Legends",
     replace: {
       description(des) {
-        return `\n${des}`
+        return `dddd`
       },
     },
   },
 ]
+
+rules.push({
+  matchApplication: "*",
+  replace: {
+    description(des) {
+      if (!des) return
+      return `\n${des}`
+    },
+  },
+})
 
 export const ignoreProcessNames: (
   | string

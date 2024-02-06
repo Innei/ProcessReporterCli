@@ -10,3 +10,17 @@ export const md5 = (text: string) => {
     .update(text)
     .digest("hex") as string
 }
+
+export const throttle = <T extends (...args: any[]) => any>(
+  fn: T,
+  time: number
+) => {
+  let lastTime = 0
+  return (...args: Parameters<T>) => {
+    const now = Date.now()
+    if (now - lastTime > time) {
+      lastTime = now
+      return fn(...args)
+    }
+  }
+}

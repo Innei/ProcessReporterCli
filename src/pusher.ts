@@ -64,7 +64,6 @@ export class Pusher {
         signal: cancelToken.signal,
       })
         .then((res) => {
-          res.json().then(logger.log)
           return res
         })
         .catch((err) => {
@@ -88,6 +87,11 @@ export class Pusher {
     })
     this.requestQueue = []
     this.requestQueue.push({ fetcher, cancelToken: cancelToken })
+
+    logger.log(
+      "Pushing process",
+      data.process + " - " + (data.meta?.description || "N/A")
+    )
     fetcher()
   }
 }

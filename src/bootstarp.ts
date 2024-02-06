@@ -20,17 +20,22 @@ export async function bootstrap() {
   async function handler(activeWin: WindowInfo | null) {
     if (!activeWin) return
 
-    const iconUrl = await Uploader.shared.uploadIcon(
-      activeWin.icon,
-      activeWin.application
+    const transformedData = await pushDataReplacor(
+      {
+        process: activeWin.application,
+        description:
+          activeWin.title === activeWin.application
+            ? undefined
+            : activeWin.title,
+        iconBase64: activeWin.icon,
+      },
+      async (imageUrl) => {
+        return await Uploader.shared.uploadIcon(
+          activeWin.icon,
+          activeWin.application
+        )
+      }
     )
-
-    const transformedData = pushDataReplacor({
-      process: activeWin.application,
-      description:
-        activeWin.title === activeWin.application ? undefined : activeWin.title,
-      iconUrl,
-    })
 
     if (!transformedData) return
     Pusher.shared.push(transformedData)

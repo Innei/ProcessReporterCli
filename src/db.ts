@@ -1,4 +1,5 @@
-import { resolve } from "path"
+import { mkdirSync } from "fs"
+import path, { resolve } from "path"
 import sqlite, { open } from "sqlite"
 import * as sqlite3 from "sqlite3"
 
@@ -6,9 +7,16 @@ const { Database } = sqlite3
 
 let _db: sqlite.Database<sqlite3.Database, sqlite3.Statement> | null = null
 
+const dbFile = resolve(
+  require("os").homedir(),
+  "./AppData/Local/ProcessRepoter/data.db"
+)
+
+mkdirSync(path.dirname(dbFile), { recursive: true })
+
 async function getDb() {
   if (_db) return _db
-  const dbFile = resolve(process.cwd(), "data.db")
+
   const db = await open({
     driver: Database,
     filename: dbFile,

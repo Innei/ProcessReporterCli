@@ -25,26 +25,42 @@ export async function uploadToS3(
     ContentType: contentType,
   })
 
-  await s3client.send(command)
+  await s3client.send(command).then((res) => {
+    if (res.$metadata.httpStatusCode !== 200) {
+      throw new Error("Failed to upload to s3")
+    }
+  })
 }
 
 export class Uploader {
   public static readonly shared = new Uploader()
 
+  private uploadingMap = {} as Record<string, boolean>
+
   async uploadIcon(iconBase64: string, name: string) {
     const db = await getDb()
 
     const md5Icon = md5(iconBase64)
+
+    const path = `${md5Icon}.png`
+    const url = s3.customDomain + "/" + path
+
+    if (this.uploadingMap[name]) {
+      return url
+    }
+
+    this.uploadingMap[name] = true
+
     const [query] = await db.all(
       "SELECT * FROM uploads WHERE name = ? OR md5 = ? LIMIT 1",
       [name, md5Icon]
     )
     if (query) {
+      this.uploadingMap[name] = false
       return query.url as string
     }
     logger.log("Uploading icon", name)
-    const path = `${md5Icon}.png`
-    const url = s3.customDomain + "/" + path
+
     uploadToS3(
       path,
       Buffer.from(iconBase64.split(",")[1], "base64"),
@@ -62,6 +78,9 @@ export class Uploader {
           url,
           name,
         ])
+      })
+      .finally(() => {
+        this.uploadingMap[name] = false
       })
     return url as string
   }
