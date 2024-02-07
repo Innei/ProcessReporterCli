@@ -44,7 +44,7 @@ export const rules: Rule[] = [
     matchApplication: "League of Legends",
     replace: {
       description(des) {
-        return `dddd`
+        return ` - 祖安`
       },
     },
   },

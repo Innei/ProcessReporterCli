@@ -1,6 +1,6 @@
-import { log } from "console"
 import { endpoint, updateKey } from "./configs"
 import { logger } from "./logger"
+import { Uploader } from "./uploader"
 import { equalObject } from "./utils"
 
 export interface PushDto {
@@ -52,32 +52,43 @@ export class Pusher {
         return
       }
 
-    const body = JSON.stringify(data)
     const cancelToken = new AbortController()
-    const fetcher = () =>
-      fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body,
-        signal: cancelToken.signal,
-      })
-        .then((res) => {
+    const fetcher = async () => {
+      try {
+        try {
+          const iconBase64 = data.meta?.iconBase64
+          if (iconBase64) {
+            data.meta!.iconUrl = await Uploader.shared.uploadIcon(
+              iconBase64,
+              data.process
+            )
+
+            delete data.meta?.iconBase64
+          }
+
+          const body = JSON.stringify(data)
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body,
+            signal: cancelToken.signal,
+          })
           return res
-        })
-        .catch((err) => {
+        } catch (err) {
           if (err.name === "AbortError") {
             logger.log("AbortError: Fetch request aborted")
           } else logger.error(err)
           return err
-        })
-        .finally(() => {
-          this.requestQueue = this.requestQueue.filter(
-            (task) => task.cancelToken !== cancelToken
-          )
-          this.dataList = this.dataList.filter((item) => item !== data)
-        })
+        }
+      } finally {
+        this.requestQueue = this.requestQueue.filter(
+          (task) => task.cancelToken !== cancelToken
+        )
+        this.dataList = this.dataList.filter((item) => item !== data)
+      }
+    }
 
     this.requestQueue.forEach((task) => {
       if (task.cancelToken.signal.aborted) {

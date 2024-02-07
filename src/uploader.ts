@@ -61,7 +61,7 @@ export class Uploader {
     }
     logger.log("Uploading icon", name)
 
-    uploadToS3(
+    await uploadToS3(
       path,
       Buffer.from(iconBase64.split(",")[1], "base64"),
 

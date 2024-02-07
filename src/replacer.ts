@@ -1,10 +1,7 @@
 import { ignoreProcessNames, rules } from "./configs"
 import { PushData, PushDto } from "./pusher"
 
-export const pushDataReplacor = async (
-  data: PushData,
-  imageHandler: (overrideUrl: string) => string | Promise<string>
-) => {
+export const pushDataReplacor = async (data: PushData) => {
   const processName = data.process
 
   if (
@@ -41,15 +38,6 @@ export const pushDataReplacor = async (
   const finalDescription =
     rule.replace?.description?.(data.description) || data.description
 
-  let uploadImageUrl = ""
-  if (finalIconProps.iconUrl || finalIconProps.iconBase64) {
-    uploadImageUrl = await imageHandler(
-      finalIconProps.iconUrl! || finalIconProps.iconBase64!
-    )
-    delete finalIconProps.iconBase64
-  }
-
-  if (uploadImageUrl) finalIconProps.iconUrl = uploadImageUrl
   return {
     process: finalProcessName,
     description: finalDescription,
