@@ -3,6 +3,7 @@ import { Pusher } from "./pusher"
 
 import { pushDataReplacor } from "./replacer"
 import { throttle } from "./utils"
+import { pushConfig } from "./configs"
 
 export async function bootstrap() {
   ActiveWindow.initialize()
@@ -16,6 +17,11 @@ export async function bootstrap() {
   ActiveWindow.subscribe(throttle(handler, 100))
 
   handler(ActiveWindow.getActiveWindow())
+
+  setInterval(
+    () => handler(ActiveWindow.getActiveWindow()),
+    pushConfig.interval
+  )
 
   async function handler(activeWin: WindowInfo | null) {
     if (!activeWin) return

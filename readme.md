@@ -8,7 +8,7 @@ Process Reporter Cli is a windows cli. It is designed to report in real time the
 
 ## Before you start
 
-You need to install [Node.js](https://nodejs.org/en/) and [pnpm](https://pnpm.io/).
+You need to install [Node.js](https://nodejs.org/en/) and yarn.
 
 ## Environment
 
@@ -34,16 +34,15 @@ And after save your env file, then you can edit `./src/configs.ts`, to set your 
 For development, you can run the following commands:
 
 ```bash
-pnpm install
-pnpm run dev
+yarn install --ignore-engines
+yarn run dev
 ```
 
 For production
 
-
 ```bash
-pnpm install
-pnpm run build
+yarn install --ignore-engines
+yarn run build
 cd dist
 ## before your run it, you need to check your env file is in the dist directory
 node index.js

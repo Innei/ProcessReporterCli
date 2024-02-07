@@ -3,6 +3,7 @@ import { s3 } from "./configs"
 import { getDb } from "./db"
 import { logger } from "./logger"
 import { md5 } from "./utils"
+import sharp from "sharp"
 
 const s3client = new S3Client({
   region: s3.region,
@@ -61,10 +62,11 @@ export class Uploader {
     }
     logger.log("Uploading icon", name)
 
+    const buffer = Buffer.from(iconBase64.split(",")[1], "base64")
+
     await uploadToS3(
       path,
-      Buffer.from(iconBase64.split(",")[1], "base64"),
-
+      await sharp(buffer).resize(64, 64).toBuffer(),
       "image/png"
     )
       .catch((err) => {

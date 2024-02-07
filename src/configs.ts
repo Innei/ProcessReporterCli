@@ -33,6 +33,15 @@ export const rules: Rule[] = [
     },
   },
   {
+    matchApplication: "WindowsTerminal.exe",
+    replace: {
+      application: () => "WindowsTerminal",
+      description(des) {
+        return "\n$ ********************"
+      },
+    },
+  },
+  {
     matchApplication: "Google Chrome",
     replace: {
       description: (des) =>
@@ -53,6 +62,9 @@ export const rules: Rule[] = [
 rules.push({
   matchApplication: "*",
   replace: {
+    application(appName) {
+      return appName?.replace(".exe", "")
+    },
     description(des) {
       if (!des) return
       return `\n${des}`
@@ -76,4 +88,8 @@ export const s3 = {
   get endpoint() {
     return `https://${s3.accountId}.r2.cloudflarestorage.com`
   },
+}
+
+export const pushConfig = {
+  interval: 30_000,
 }

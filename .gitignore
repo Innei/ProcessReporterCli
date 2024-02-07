@@ -49,3 +49,6 @@ data.db
 logs
 
 /lib
+.pnp.cjs
+.pnp.loader.mjs
+.yarn
